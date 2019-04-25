@@ -88,13 +88,13 @@
                 cwidth = rect.width + 10
                 cheight = rect.height + 40
 
-                if (rect.width < 80) {
+                if (rect.width < 100) {
                     // Draw rectangular
                     context.strokeStyle = '#7c7f7d';
                     context.lineWidth = 7;
                     context.strokeRect(cx, cy, cwidth + 10, cheight + 20);
 
-                } else if (rect.width >= 80 && rect.width < 120) {
+                } else if (rect.width >= 100 && rect.width < 180) {
                     // Draw rectangular
                     context.strokeStyle = '#ff8432';
                     context.lineWidth = 7;
@@ -104,7 +104,7 @@
                     context.fillStyle = "#caccce";
                     context.fillText('請再靠近一點', rect.x - (rect.width / 2), rect.y + (rect.height / 2))
 
-                } else if (rect.width >= 120) {
+                } else if (rect.width >= 180) {
 
                     // generate small picture
                     genSmallPic()
@@ -160,7 +160,7 @@
 
         setTimeout(function () {
             popOff('myPopout');
-        }, 1000)
+        }, 2000)
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
