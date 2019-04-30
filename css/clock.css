@@ -1,0 +1,49 @@
+/*.clockdate-wrapper {*/
+/*grid-column: 2/4;*/
+/*grid-row: 1;*/
+/*background-color: #e2e2e2;*/
+/*!*padding:25px;*!*/
+/*max-width: 350px;*/
+/*width: 100%;*/
+/*text-align: center;*/
+/*border-radius: 5px;*/
+/*margin: 0 auto;*/
+/*margin-top: 20px;*/
+/*z-index: 1;*/
+/*}*/
+
+.clockdate-wrapper {
+    grid-column: 4/5;
+    grid-row: 1;
+    /*max-width: 350px;*/
+    width: 100%;
+    text-align: left;
+    /*border-radius: 5px;*/
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-right: 20px;
+    z-index: 1;
+}
+
+#clock {
+    font-family: Monospaced;
+    font-size: 50px;
+    z-index: 1;
+    color: #727176;
+    letter-spacing: 3px;
+}
+
+#clock span {
+    font-size: 30px;
+    position: relative;
+    /*top: -27px;*/
+    /*left: -0px;*/
+    z-index: 1;
+}
+
+#date {
+    letter-spacing: 5px;
+    font-size: 23px;
+    font-family: Monospaced;
+    color: #D34817;
+}
