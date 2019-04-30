@@ -12,7 +12,7 @@
 }
 
 .pop-content {
-    margin: 17% auto; /* 15% from the top and centered */
+    margin: 8% auto; /* 15% from the top and centered */
     width: auto; /* Could be more or less, depending on screen size */
-    padding-left: 42%;
+    padding-left: 38%;
 }
