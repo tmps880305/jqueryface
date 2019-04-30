@@ -15,8 +15,9 @@
 
 <style type="text/css">
     html, body {
-        height: 98%;
-        margin: 7px;
+        padding-left: 4px;
+        margin: 3px;
+        height: 99%;
         width: 99%;
     }
 </style>
@@ -53,32 +54,33 @@
 <body onload="clock()">
 <div class="wrapper">
     <div class="topBar">
-        <img id="logo" width="1504" src="./img/sources/top.png" alt="**logo**">
+        <img id="logo" src="./img/sources/top.png" alt="**logo**" width="1892">
     </div>
     <div class="clockdate-wrapper">
         <div id="clock"></div>
         <div id="date"></div>
     </div>
     <div class="background-video">
-        <video autoplay muted loop src="./img/sources/bg.mp4" type="video/mp4" width="1504"></video>
+        <video autoplay muted loop src="./img/sources/bg.mp4" type="video/mp4" width="1892"></video>
     </div>
 
     <div class="video-background">
-        <img src="./img/sources/videoframe.png" width="880">
+        <img src="./img/sources/videoframe.png" width="1080">
     </div>
     <div class="video">
         <video ref="video" id="video" width="800" height="600" muted class="abs" autoplay
                style="display: none"></video>
         <canvas id="canvas" width="800" height="600"></canvas>
     </div>
-    <!--<div class="smContainer">-->
+    <!--<div c
+    lass="smContainer">-->
         <!--<canvas id="canvasSmall" width="360" height="480"></canvas>-->
     <!--</div>-->
     <!--<div class="smContainer2">-->
     <!--<canvas id="matchResult"></canvas>-->
     <!--</div>-->
     <div class="butBar">
-        <img id="but" width="1504" src="./img/sources/but.png" alt="**buttom**">
+        <img id="but" src="./img/sources/but.png" alt="**buttom**" width="1892">
     </div>
 </div>
 
