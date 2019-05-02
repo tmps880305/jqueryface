@@ -97,6 +97,8 @@
     var imageMem = new Image();
     var result1 = '', result2 = '', result3 = '', result4 = '';
     var resultCount = 8;
+    var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
+
 
     $(function () {
         var canvas = document.getElementById('canvas');
@@ -119,6 +121,7 @@
             cheight = null
             context.drawImage(video, 0, 0, video.width, video.height);
 
+            arrangeCards();
 
             $('#canvas').faceDetection({
                 complete: function (faces) {
@@ -196,6 +199,89 @@
         });
     }
 
+    function arrangeCards() {
+        //generate time now
+        var today = new Date();
+        var sec = today.getSeconds();
+        sec = checkTime(sec);
+
+        var rt1 = rslTime1.substring(6)
+        var rt2 = rslTime2.substring(6)
+        var rt3 = rslTime3.substring(6)
+        var rt4 = rslTime4.substring(6)
+
+        var cp1 = -1, cp2 = -1, cp3 = -1, cp4 = -1;
+
+        if (rt1 !== '' && cp1 === -1) {
+            sec >= rt1 ? (cp1 = sec - rt1) : (cp1 = rt1 - sec);
+        }
+        // if (rt2 !== '') {
+        //     sec >= rt2 ? (cp2 = sec - rt2) : (cp2 = rt2 - sec);
+        // }
+        // if (rt3 !== '') {
+        //     sec >= rt3 ? (cp3 = sec - rt3) : (cp3 = rt3 - sec);
+        // }
+        // if (rt4 !== '') {
+        //     sec >= rt4 ? (cp4 = sec - rt4) : (cp4 = rt4 - sec);
+        // }
+        // console.log("(" + rt1 + "," + rt2 + "," + rt3 + "," + rt4 + ")")
+        console.log("(" + cp1 + "," + cp2 + "," + cp3 + "," + cp4 + ")")
+
+
+        if (cp1 >= 30) {
+            clearResult(1);
+            rslTime1 = rslTime2
+            rslTime2 = rslTime3
+            rslTime3 = rslTime4
+
+        } else if (cp2 >= 20) {
+
+        } else if (cp3 >= 20) {
+
+        } else if (cp4 >= 20) {
+
+        }
+
+
+    }
+
+    function clearResult(id) {
+        var canCard1 = document.getElementById('result1');
+        var ct1 = canCard1.getContext('2d');
+        var canCard2 = document.getElementById('result2');
+        var ct2 = canCard2.getContext('2d');
+        var canCard3 = document.getElementById('result3');
+        var ct3 = canCard3.getContext('2d');
+        var canCard4 = document.getElementById('result4');
+        var ct4 = canCard4.getContext('2d');
+
+        switch (id) {
+            case 1:
+                ct1.clearRect(0, 0, canvas.width, canvas.height);
+                ct1.drawImage(canCard2, 0, 0, canCard2.width, canCard2.height);
+
+                ct2.clearRect(0, 0, canvas.width, canvas.height);
+                ct2.drawImage(canCard3, 0, 0, canCard3.width, canCard3.height);
+
+                ct3.clearRect(0, 0, canvas.width, canvas.height);
+                ct3.drawImage(canCard4, 0, 0, canCard4.width, canCard4.height);
+
+                ct4.clearRect(0, 0, canvas.width, canvas.height);
+
+                result1 = result2;
+                result2 = result3;
+                result3 = result4;
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+
+    }
+
     function genSmallPic() {
         // generate small picture
         var canSamll = document.getElementById('canvasSmall')
@@ -215,7 +301,7 @@
 
     }
 
-    function genCard(resultCount,memId,memName,createTime) {
+    function genCard(resultCount, memId, memName, createTime) {
         // generate result cards
         var canCard1 = document.getElementById('result1');
         var ct1 = canCard1.getContext('2d');
@@ -270,7 +356,7 @@
         }
     }
 
-    function setImage(resultImage,memId,memName,createTime) {
+    function setImage(resultImage, memId, memName, createTime) {
         //init image
         var ri = "data:image/jpg;base64," + resultImage;
 
@@ -309,32 +395,51 @@
             url: "http://10.254.253.128:8080/api/FRS",
             success: function (data) {
                 console.log(data)
+
+                //generate createTime (Tentatively use)
+                var today = new Date();
+                var hr = today.getHours();
+                var min = today.getMinutes();
+                var sec = today.getSeconds();
+                hr = checkTime(hr);
+                min = checkTime(min);
+                sec = checkTime(sec);
+                var createTime = hr + ":" + min + ":" + sec
+
                 if (data.Result === 0 && data.Score > 0.7) {
                     if (data.MemberID === result1) {
                         down('#resultBounce1')
+                        rslTime1 = createTime;
                     } else if (data.MemberID === result2) {
                         down('#resultBounce2')
+                        rslTime2 = createTime;
                     } else if (data.MemberID === result3) {
                         down('#resultBounce3')
+                        rslTime3 = createTime;
                     } else if (data.MemberID === result4) {
                         down('#resultBounce4')
+                        rslTime4 = createTime;
                     } else {
                         switch (resultCount) {
                             case 1:
                                 popOut('myPopout');
                                 result1 = data.MemberID;
+                                rslTime1 = createTime;
                                 break;
                             case 3:
                                 popOut('myPopout');
                                 result2 = data.MemberID;
+                                rslTime2 = createTime;
                                 break;
                             case 5:
                                 popOut('myPopout');
                                 result3 = data.MemberID;
+                                rslTime3 = createTime;
                                 break;
                             case 7:
                                 popOut('myPopout');
                                 result4 = data.MemberID;
+                                rslTime4 = createTime;
                                 break;
                             case 9:
                                 resultCount = 0;
@@ -342,9 +447,10 @@
                             default:
                                 break;
                         }
-                        setImage(data.Image,data.MemberID,data.MemberName,'22:22:29');
-                        genCard(resultCount,data.MemberID,data.MemberName,'22:22:29');
-                        resultCount ++;
+
+                        setImage(data.Image, data.MemberID, data.MemberName, createTime);
+                        genCard(resultCount, data.MemberID, data.MemberName, createTime);
+                        resultCount++;
                     }
                 }
             },

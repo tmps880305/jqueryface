@@ -4,7 +4,6 @@ function popOut(myPopout) {
 
     // When the user clicks on the button, open the popout
     pop.style.display = "block";
-    console.log("PPPPPPOP")
 
     setTimeout(function () {
         popOff('myPopout');
