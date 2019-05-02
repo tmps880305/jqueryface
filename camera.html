@@ -30,11 +30,10 @@
 </style>
 
 
-
 <body onload="clock();">
 <div class="wrapper">
     <div class="topBar">
-        <img id="logo" src="./img/sources/top.png" alt="**logo**" width="1892" onclick="init()">
+        <img id="logo" src="./img/sources/top.png" alt="**logo**" width="1892">
     </div>
     <div class="clockdate-wrapper">
         <div id="clock"></div>
@@ -59,18 +58,18 @@
 
     <!--Result boxes-->
     <div class="result1">
-        <div id="resultBounce1" onclick="up(resultBounce1)" style="position: relative">
+        <div id="resultBounce1" onclick="down('#resultBounce1')" style="position: relative">
             <canvas id="result1" width="300" height="400"></canvas>
         </div>
-        <div id="resultBounce3">
+        <div id="resultBounce3" style="position: relative">
             <canvas id="result3" width="300" height="400"></canvas>
         </div>
     </div>
     <div class="result2">
-        <div id="resultBounce2">
+        <div id="resultBounce2" style="position: relative">
             <canvas id="result2" width="300" height="400"></canvas>
         </div>
-        <div id="resultBounce4">
+        <div id="resultBounce4" style="position: relative">
             <canvas id="result4" width="300" height="400"></canvas>
         </div>
     </div>
@@ -97,8 +96,7 @@
     var image = new Image();
     var imageMem = new Image();
     var result1 = '', result2 = '', result3 = '', result4 = '';
-    var resultCount = 1;
-    var matchingCount = 1;
+    var resultCount = 8;
 
     $(function () {
         var canvas = document.getElementById('canvas');
@@ -217,13 +215,7 @@
 
     }
 
-    function init() {
-        var loadPop = document.getElementById('matchResult')
-        var loadSmall = document.getElementById('matchResult')
-        popOut('myPopout')
-    }
-
-    function genCard(resultCount) {
+    function genCard(resultCount,memId,memName,createTime) {
         // generate result cards
         var canCard1 = document.getElementById('result1');
         var ct1 = canCard1.getContext('2d');
@@ -237,28 +229,48 @@
         switch (resultCount) {
             case 1:
                 ct1.clearRect(0, 0, canvas.width, canvas.height);
-                ct1.drawImage(imageMem, 50, 45, 300, 300);
+                ct1.drawImage(imageMem, 45, 35, 220, 220);
                 ct1.drawImage(image, 0, 0, 300, 400);
-                break;
-            case 2:
-                ct2.clearRect(0, 0, canvas.width, canvas.height);
-                ct2.drawImage(imageMem, 50, 45, 300, 300);
-                ct2.drawImage(image, 0, 0, 300, 400);
+                ct1.font = "18pt Monospaced";
+                ct1.fillStyle = "White";
+                ct1.fillText(memId, 155, 280);
+                ct1.fillText(memName, 155, 315);
+                ct1.fillText(createTime, 155, 350);
                 break;
             case 3:
-                ct3.clearRect(0, 0, canvas.width, canvas.height);
-                ct3.drawImage(imageMem, 50, 45, 300, 300);
-                ct3.drawImage(image, 0, 0, 300, 400);
+                ct2.clearRect(0, 0, canvas.width, canvas.height);
+                ct2.drawImage(imageMem, 45, 35, 220, 220);
+                ct2.drawImage(image, 0, 0, 300, 400);
+                ct2.font = "18pt Monospaced";
+                ct2.fillStyle = "White";
+                ct2.fillText(memId, 155, 280);
+                ct2.fillText(memName, 155, 315);
+                ct2.fillText(createTime, 155, 350);
                 break;
-            case 4:
+            case 5:
+                ct3.clearRect(0, 0, canvas.width, canvas.height);
+                ct3.drawImage(imageMem, 45, 35, 220, 220);
+                ct3.drawImage(image, 0, 0, 300, 400);
+                ct3.font = "18pt Monospaced";
+                ct3.fillStyle = "White";
+                ct3.fillText(memId, 155, 280);
+                ct3.fillText(memName, 155, 315);
+                ct3.fillText(createTime, 155, 350);
+                break;
+            case 7:
                 ct4.clearRect(0, 0, canvas.width, canvas.height);
-                ct4.drawImage(imageMem, 50, 45, 300, 300);
+                ct4.drawImage(imageMem, 45, 35, 220, 220);
                 ct4.drawImage(image, 0, 0, 300, 400);
+                ct4.font = "18pt Monospaced";
+                ct4.fillStyle = "White";
+                ct4.fillText(memId, 155, 280);
+                ct4.fillText(memName, 155, 315);
+                ct4.fillText(createTime, 155, 350);
                 break;
         }
     }
 
-    function setImage(resultImage) {
+    function setImage(resultImage,memId,memName,createTime) {
         //init image
         var ri = "data:image/jpg;base64," + resultImage;
 
@@ -268,15 +280,18 @@
         image.src = 'img/sources/memCard.png';
         imageMem.src = ri;
 
-        // console.log(ri)
 
         //makePopImage
         matchResult.width = image.width;
         matchResult.height = image.height;
         ctr.clearRect(0, 0, canvas.width, canvas.height);
-        ctr.drawImage(imageMem, 40, 70, 360, 360)
+        ctr.drawImage(imageMem, 45, 55, 320, 320)
         ctr.drawImage(image, 0, 0, image.width, image.height);
-
+        ctr.font = "22pt Monospaced";
+        ctr.fillStyle = "White";
+        ctr.fillText(memId, 210, 398);
+        ctr.fillText(memName, 210, 447);
+        ctr.fillText(createTime, 210, 495);
     }
 
 
@@ -294,52 +309,47 @@
             url: "http://10.254.253.128:8080/api/FRS",
             success: function (data) {
                 console.log(data)
-                if (data.Result === 0 && data.Score > 0.8) {
+                if (data.Result === 0 && data.Score > 0.7) {
                     if (data.MemberID === result1) {
-                        console.log("Pop Result1")
+                        down('#resultBounce1')
                     } else if (data.MemberID === result2) {
-                        console.log("Pop Result2")
+                        down('#resultBounce2')
                     } else if (data.MemberID === result3) {
-                        console.log("Pop Result3")
+                        down('#resultBounce3')
                     } else if (data.MemberID === result4) {
-                        console.log("Pop Result4")
+                        down('#resultBounce4')
                     } else {
-                        if (matchingCount > 0) {
-                            switch (resultCount) {
-                                case 1:
-                                    result1 = data.MemberID;
-                                    resultCount++;
-                                    break;
-                                case 2:
-                                    result2 = data.MemberID;
-                                    resultCount++;
-                                    break;
-                                case 3:
-                                    result3 = data.MemberID;
-                                    resultCount++;
-                                    break;
-                                case 4:
-                                    result4 = data.MemberID;
-                                    resultCount++;
-                                    break;
-                                case 5:
-                                    resultCount++;
-                                    break;
-                                case 6:
-                                    resultCount = 1;
-                                    break;
-                            }
-
+                        switch (resultCount) {
+                            case 1:
+                                popOut('myPopout');
+                                result1 = data.MemberID;
+                                break;
+                            case 3:
+                                popOut('myPopout');
+                                result2 = data.MemberID;
+                                break;
+                            case 5:
+                                popOut('myPopout');
+                                result3 = data.MemberID;
+                                break;
+                            case 7:
+                                popOut('myPopout');
+                                result4 = data.MemberID;
+                                break;
+                            case 9:
+                                resultCount = 0;
+                                break;
+                            default:
+                                break;
                         }
-                        setImage(data.Image);
-                        popOut('myPopout');
-                        genCard(resultCount);
-                        matchingCount++;
+                        setImage(data.Image,data.MemberID,data.MemberName,'22:22:29');
+                        genCard(resultCount,data.MemberID,data.MemberName,'22:22:29');
+                        resultCount ++;
                     }
                 }
             },
             error: function (jqXHR, exception) {
-                console.log("ajax error")
+                console.log("Matching error")
                 // ajaxError(jqXHR, exception);
             },
         });

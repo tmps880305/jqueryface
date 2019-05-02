@@ -1,8 +1,10 @@
 //bouncing functions
-function up() {
-    $("#resultBounce1").animate({top: "-10px"}, down);
+function up(id) {
+    // console.log("UP")
+    $(id).animate({top: "-10px"});
 }
 
-function down() {
-    $("#resultBounce1").animate({top: "0px"});
+function down(id) {
+    // console.log("DOWN")
+    $(id).animate({top: "0px"},up(id));
 }
