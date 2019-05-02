@@ -15,7 +15,7 @@
 .clockdate-wrapper {
     grid-column: 3/4;
     grid-row: 1;
-    max-width: 300px;
+    max-width: 310px;
     width: 100%;
     text-align: left;
     /*border-radius: 5px;*/

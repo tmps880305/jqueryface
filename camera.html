@@ -219,7 +219,7 @@
 
     function init() {
         var loadPop = document.getElementById('matchResult')
-        var loadSmall = document.getElementById('canvasSmall')
+        var loadSmall = document.getElementById('matchResult')
         popOut('myPopout')
     }
 
@@ -329,8 +329,8 @@
                                     resultCount = 1;
                                     break;
                             }
-                        }
 
+                        }
                         setImage(data.Image);
                         popOut('myPopout');
                         genCard(resultCount);
