@@ -106,7 +106,7 @@
     var resultCount = 1;
     var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
     var errDetect = true, errWaitTime = -1;
-    var ERRCOOLTIME = 500;
+    var ERRCOOLTIME = 30;
 
 
     $(function () {
@@ -234,10 +234,7 @@
         if (rt4 !== '' && cp4 === -1) {
             sec >= rt4 ? (cp4 = sec - rt4) : (cp4 = sec + 60 - rt4);
         }
-        // console.log("(" + rt1 + "," + rt2 + "," + rt3 + "," + rt4 + ")")
-        // console.log(" r1 -  sec = " + rt1 + "-" + sec)
         console.log("(" + cp1 + "," + cp2 + "," + cp3 + "," + cp4 + ")")
-        // console.log("RCount = " + resultCount)
 
         if (cp1 >= 30) {
             clearResult(1);
@@ -599,7 +596,7 @@
                         resultCount++;
                     }
                 } else if (data.Result === 33) {
-                    // detectFail(sec);
+                    detectFail(sec);
                 } else {
                     switch (data.Result) {
                         case 1:
