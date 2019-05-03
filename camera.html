@@ -87,7 +87,7 @@
 
 <div id="myPopout" class="popuot">
     <div class="pop-content">
-        <canvas id="matchResult"></canvas>
+        <canvas id="matchResult" crossorigin="anonymous"></canvas>
     </div>
 </div>
 
@@ -96,8 +96,10 @@
     var image = new Image();
     var imageMem = new Image();
     var result1 = '', result2 = '', result3 = '', result4 = '';
-    var resultCount = 8;
+    var resultCount = 1;
     var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
+    var errDetect = true, errWaitTime = -1;
+    var ERRCOOLTIME = 20;
 
 
     $(function () {
@@ -121,7 +123,7 @@
             cheight = null
             context.drawImage(video, 0, 0, video.width, video.height);
 
-            arrangeCards();
+            // arrangeCards();
 
             $('#canvas').faceDetection({
                 complete: function (faces) {
@@ -301,7 +303,7 @@
 
     }
 
-    function genCard(resultCount, memId, memName, createTime) {
+    function genCard(resultCount, data, createTime) {
         // generate result cards
         var canCard1 = document.getElementById('result1');
         var ct1 = canCard1.getContext('2d');
@@ -319,46 +321,46 @@
                 ct1.drawImage(image, 0, 0, 300, 400);
                 ct1.font = "18pt Monospaced";
                 ct1.fillStyle = "White";
-                ct1.fillText(memId, 155, 280);
-                ct1.fillText(memName, 155, 315);
+                ct1.fillText(data.MemberID, 155, 280);
+                ct1.fillText(data.MemberName, 155, 315);
                 ct1.fillText(createTime, 155, 350);
                 break;
-            case 3:
+            case 2:
                 ct2.clearRect(0, 0, canvas.width, canvas.height);
                 ct2.drawImage(imageMem, 45, 35, 220, 220);
                 ct2.drawImage(image, 0, 0, 300, 400);
                 ct2.font = "18pt Monospaced";
                 ct2.fillStyle = "White";
-                ct2.fillText(memId, 155, 280);
-                ct2.fillText(memName, 155, 315);
+                ct2.fillText(data.MemberID, 155, 280);
+                ct2.fillText(data.MemberName, 155, 315);
                 ct2.fillText(createTime, 155, 350);
                 break;
-            case 5:
+            case 3:
                 ct3.clearRect(0, 0, canvas.width, canvas.height);
                 ct3.drawImage(imageMem, 45, 35, 220, 220);
                 ct3.drawImage(image, 0, 0, 300, 400);
                 ct3.font = "18pt Monospaced";
                 ct3.fillStyle = "White";
-                ct3.fillText(memId, 155, 280);
-                ct3.fillText(memName, 155, 315);
+                ct3.fillText(data.MemberID, 155, 280);
+                ct3.fillText(data.MemberName, 155, 315);
                 ct3.fillText(createTime, 155, 350);
                 break;
-            case 7:
+            case 4:
                 ct4.clearRect(0, 0, canvas.width, canvas.height);
                 ct4.drawImage(imageMem, 45, 35, 220, 220);
                 ct4.drawImage(image, 0, 0, 300, 400);
                 ct4.font = "18pt Monospaced";
                 ct4.fillStyle = "White";
-                ct4.fillText(memId, 155, 280);
-                ct4.fillText(memName, 155, 315);
+                ct4.fillText(data.MemberID, 155, 280);
+                ct4.fillText(data.MemberName, 155, 315);
                 ct4.fillText(createTime, 155, 350);
                 break;
         }
     }
 
-    function setImage(resultImage, memId, memName, createTime) {
+    function setImage(data, createTime, resultCount) {
         //init image
-        var ri = "data:image/jpg;base64," + resultImage;
+        var ri = "data:image/jpg;base64," + data.Image;
 
         var matchResult = document.getElementById('matchResult');
         var ctr = matchResult.getContext('2d');
@@ -366,18 +368,84 @@
         image.src = 'img/sources/memCard.png';
         imageMem.src = ri;
 
+        image.onload = function () {
+            //makePopImage
+            matchResult.width = image.width;
+            matchResult.height = image.height;
+        }
+        setTimeout(function () {
+            drawSuccess(ri, data, createTime, resultCount);
+        }, 500)
+    }
 
-        //makePopImage
-        matchResult.width = image.width;
-        matchResult.height = image.height;
+    function drawSuccess(ri, data, createTime, resultCount) {
+        var matchResult = document.getElementById('matchResult');
+        var ctr = matchResult.getContext('2d');
+        imageMem.src = ri;
+
         ctr.clearRect(0, 0, canvas.width, canvas.height);
         ctr.drawImage(imageMem, 45, 55, 320, 320)
+
+        setTimeout(function () {
+            drawFrame(data, createTime, resultCount);
+        }, 100)
+    }
+
+    function drawFrame(data, createTime, resultCount) {
+        var matchResult = document.getElementById('matchResult');
+        var ctr = matchResult.getContext('2d');
         ctr.drawImage(image, 0, 0, image.width, image.height);
         ctr.font = "22pt Monospaced";
         ctr.fillStyle = "White";
-        ctr.fillText(memId, 210, 398);
-        ctr.fillText(memName, 210, 447);
+        ctr.fillText(data.MemberID, 210, 398);
+        ctr.fillText(data.MemberName, 210, 447);
         ctr.fillText(createTime, 210, 495);
+
+        popOut('myPopout');
+        console.log(resultCount)
+        genCard(resultCount, data, createTime);
+    }
+
+    function detectFail(createTime) {
+        //generate time now
+        var today = new Date();
+        var sec = today.getSeconds();
+        sec = checkTime(sec);
+        var cp;
+
+
+        if (errDetect) {
+            var matchResult = document.getElementById('matchResult');
+            var ctr = matchResult.getContext('2d');
+
+            image.src = 'img/sources/failcard.png';
+
+            image.onload = function () {
+                //makePopImage
+                matchResult.width = image.width;
+                matchResult.height = image.height;
+            }
+
+            setTimeout(function () {
+                drawFail();
+            }, 500)
+
+            errDetect = false
+            errWaitTime = sec
+        } else {
+            errWaitTime < createTime ? (cp = createTime - errWaitTime) : (cp = createTime + 60 - errWaitTime)
+            cp > ERRCOOLTIME ? (errDetect = true) : (errDetect = false)
+        }
+        console.log(errDetect)
+    }
+
+    function drawFail() {
+        var matchResult = document.getElementById('matchResult');
+        var ctr = matchResult.getContext('2d');
+
+        ctr.drawImage(image, 0, 0, image.width, image.height);
+
+        popOut('myPopout');
     }
 
 
@@ -422,35 +490,91 @@
                     } else {
                         switch (resultCount) {
                             case 1:
-                                popOut('myPopout');
                                 result1 = data.MemberID;
-                                rslTime1 = createTime;
+                                break;
+                            case 2:
+                                result2 = data.MemberID;
                                 break;
                             case 3:
-                                popOut('myPopout');
-                                result2 = data.MemberID;
-                                rslTime2 = createTime;
-                                break;
-                            case 5:
-                                popOut('myPopout');
                                 result3 = data.MemberID;
-                                rslTime3 = createTime;
                                 break;
-                            case 7:
-                                popOut('myPopout');
+                            case 4:
                                 result4 = data.MemberID;
-                                rslTime4 = createTime;
-                                break;
-                            case 9:
-                                resultCount = 0;
                                 break;
                             default:
                                 break;
                         }
 
-                        setImage(data.Image, data.MemberID, data.MemberName, createTime);
-                        genCard(resultCount, data.MemberID, data.MemberName, createTime);
+                        setImage(data, createTime, resultCount);
                         resultCount++;
+                    }
+                } else if (data.Result === 33) {
+                    detectFail(sec);
+                } else {
+                    switch (data.Result) {
+                        case 1:
+                            console.log("Unkown Error");
+                            break;
+                        case 2:
+                            console.log("API Not Initialized");
+                            break;
+                        case 3:
+                            console.log("License Limit Reached");
+                            break;
+                        case 4:
+                            console.log("FC Not Configure");
+                            break;
+                        case 5:
+                            console.log("MS Not Configure");
+                            break;
+                        case 6:
+                            console.log("NS Not Configure");
+                            break;
+                        case 7:
+                            console.log("FC Not Connected");
+                            break;
+                        case 8:
+                            console.log("MS Not Connected");
+                            break;
+                        case 9:
+                            console.log("NS Not Connected");
+                            break;
+                        case 10:
+                            console.log("Image Error");
+                            break;
+                        case 13:
+                            console.log("User Not Found");
+                            break;
+                        case 14:
+                            console.log("Parameter Not Found");
+                            break;
+                        case 15:
+                            console.log("Time Out");
+                            break;
+                        case 16:
+                            console.log("MS Memory Full");
+                            break;
+                        case 17:
+                            console.log("Database Error);
+                            break;
+                        case 19:
+                            console.log("Internal Error");
+                            break;
+                        case 20:
+                            console.log("Network Error");
+                            break;
+                        case 22:
+                            console.log("License Not Found");
+                            break;
+                        case 23:
+                            console.log("License Error");
+                            break;
+                        case 32:
+                            console.log("Not Initialized");
+                            break;
+                        case 34:
+                            console.log("Require Data Is Missing");
+                            break;
                     }
                 }
             },
