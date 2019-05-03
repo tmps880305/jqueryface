@@ -6,7 +6,7 @@ function popOut(myPopout) {
     pop.style.display = "block";
 
     setTimeout(function () {
-        popOff('myPopout');
+        popOff(myPopout);
     }, 1500)
 
     // When the user clicks anywhere outside of the modal, close it

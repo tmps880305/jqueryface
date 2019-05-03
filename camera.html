@@ -91,6 +91,13 @@
     </div>
 </div>
 
+<div id="myPopout2" class="popuot">
+    <div class="pop-content">
+        <canvas id="matchResult2" crossorigin="anonymous"></canvas>
+    </div>
+</div>
+
+
 <script>
     var cx, cy, cwidth, cheight;
     var image = new Image();
@@ -415,7 +422,7 @@
 
 
         if (errDetect) {
-            var matchResult = document.getElementById('matchResult');
+            var matchResult = document.getElementById('matchResult2');
             var ctr = matchResult.getContext('2d');
 
             image.src = 'img/sources/failcard.png';
@@ -440,12 +447,12 @@
     }
 
     function drawFail() {
-        var matchResult = document.getElementById('matchResult');
+        var matchResult = document.getElementById('matchResult2');
         var ctr = matchResult.getContext('2d');
 
         ctr.drawImage(image, 0, 0, image.width, image.height);
 
-        popOut('myPopout');
+        popOut('myPopout2');
     }
 
 
