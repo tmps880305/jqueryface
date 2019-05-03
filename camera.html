@@ -93,7 +93,7 @@
 
 <div id="myPopout2" class="popuot">
     <div class="pop-content">
-        <canvas id="matchResult2" crossorigin="anonymous"></canvas>
+        <img src="./img/sources/failcard.png">
     </div>
 </div>
 
@@ -101,12 +101,13 @@
 <script>
     var cx, cy, cwidth, cheight;
     var image = new Image();
+    var imageFail = new Image();
     var imageMem = new Image();
     var result1 = '', result2 = '', result3 = '', result4 = '';
     var resultCount = 1;
     var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
     var errDetect = true, errWaitTime = -1;
-    var ERRCOOLTIME = 30;
+    var ERRCOOLTIME = 20;
 
 
     $(function () {
@@ -499,20 +500,8 @@
 
 
         if (errDetect) {
-            var matchResult = document.getElementById('matchResult2');
-            var ctr = matchResult.getContext('2d');
 
-            image.src = 'img/sources/failcard.png';
-
-            image.onload = function () {
-                //makePopImage
-                matchResult.width = image.width;
-                matchResult.height = image.height;
-            }
-
-            setTimeout(function () {
-                drawFail();
-            }, 500)
+            popOut('myPopout2')
 
             errDetect = false
             errWaitTime = sec
@@ -521,15 +510,6 @@
             cp > ERRCOOLTIME ? (errDetect = true) : (errDetect = false)
         }
         console.log(errDetect)
-    }
-
-    function drawFail() {
-        var matchResult = document.getElementById('matchResult2');
-        var ctr = matchResult.getContext('2d');
-
-        ctr.drawImage(image, 0, 0, image.width, image.height);
-
-        popOut('myPopout2');
     }
 
     function matching(image) {
