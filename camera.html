@@ -101,7 +101,6 @@
 <script>
     var cx, cy, cwidth, cheight;
     var image = new Image();
-    var imageFail = new Image();
     var imageMem = new Image();
     var result1 = '', result2 = '', result3 = '', result4 = '';
     var resultCount = 1;
@@ -352,7 +351,6 @@
         var ct = canSamll.getContext('2d')
         var can = document.getElementById('canvas')
         var ctx = can.getContext('2d')
-
 
         ct.drawImage(can, cx - (cwidth * 0.4), cy - (cheight * 0.4), (cwidth * (1 + 0.8)), (cwidth * (1 + 0.8)), 0, 0, 320, 320)
 

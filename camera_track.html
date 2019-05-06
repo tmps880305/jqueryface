@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>web RTC</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+</head>
+<script src="js/jquery-3.4.0.min.js"></script>
+<script src="js/ccv.js"></script>
+<script src="js/cascade.js"></script>
+<script src="js/jquery.facedetection.js"></script>
+<link href="css/htmlWrapper.css" rel="stylesheet">
+
+<script src="build/tracking-min.js"></script>
+<script src="build/data/face-min.js"></script>
+
+<link href="css/popout.css" rel="stylesheet">
+<script src="js/popout.js"></script>
+
+<link href="css/clock.css" rel="stylesheet">
+<script src="js/clock.js"></script>
+
+<link href="css/resultBox.css" rel="stylesheet">
+<script src="js/bouncing.js"></script>
+
+<style type="text/css">
+    html, body {
+        padding-left: 4px;
+        margin: 3px;
+        height: 99%;
+        width: 99%;
+    }
+</style>
+
+
+<body onload="clock();">
+<div class="wrapper">
+    <div class="topBar">
+        <img id="logo" src="./img/sources/top.png" alt="**logo**" width="1892">
+    </div>
+    <div class="clockdate-wrapper">
+        <div id="clock"></div>
+        <div id="date"></div>
+    </div>
+
+    <!--Background displaying mp4-->
+    <div class="background-video">
+        <video autoplay muted loop src="./img/sources/bg.mp4" type="video/mp4" width="1892"></video>
+    </div>
+
+    <!--Backhold for the camera screen-->
+    <div class="video-background">
+        <img src="./img/sources/videoframe.png" width="1080">
+    </div>
+
+    <!--camera screen-->
+    <div class="video">
+        <video ref="video"  id="video" width="960" height="720" preload autoplay loop muted style="position: absolute;"></video>
+        <canvas id="canvas" width="960" height="720" style="position: absolute"></canvas>
+    </div>
+
+    <!--Result boxes-->
+    <div class="result1">
+        <div id="resultBounce1" onclick="down('#resultBounce1')" style="position: relative">
+            <canvas id="result1" width="300" height="400"></canvas>
+        </div>
+        <div id="resultBounce3" style="position: relative">
+            <canvas id="result3" width="300" height="400"></canvas>
+        </div>
+    </div>
+    <div class="result2">
+        <div id="resultBounce2" style="position: relative">
+            <canvas id="result2" width="300" height="400"></canvas>
+        </div>
+        <div id="resultBounce4" style="position: relative">
+            <canvas id="result4" width="300" height="400"></canvas>
+        </div>
+    </div>
+
+
+    <div class="butBar">
+        <img id="but" src="./img/sources/but.png" alt="**buttom**" width="1892">
+    </div>
+</div>
+<!--<button onclick="addUser()">Add</button>-->
+
+<div class="smContainer">
+    <canvas id="canvasSmall" width="360" height="480"></canvas>
+</div>
+
+<div id="myPopout" class="popuot">
+    <div class="pop-content">
+        <canvas id="matchResult" crossorigin="anonymous"></canvas>
+    </div>
+</div>
+
+<div id="myPopout2" class="popuot">
+    <div class="pop-content">
+        <img src="./img/sources/failcard.png">
+    </div>
+</div>
+
+
+<script>
+    var cx, cy, cwidth, cheight;
+    var image = new Image();
+    var imageMem = new Image();
+    var result1 = '', result2 = '', result3 = '', result4 = '';
+    var resultCount = 1;
+    var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
+    var errDetect = true, errWaitTime = -1;
+    var ERRCOOLTIME = 200;
+
+
+    window.onload = function () {
+        var video = document.getElementById('video');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+
+
+        var tracker = new tracking.ObjectTracker('face');
+        tracker.setInitialScale(4);
+        tracker.setStepSize(2);
+        tracker.setEdgesDensity(0.1);
+
+        tracking.track('#video', tracker, {camera: true});
+
+        tracker.on('track', function (event) {
+            // context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(video, 0, 0, video.width, video.height);
+
+            arrangeCards();
+
+            event.data.forEach(function (rect) {
+
+                cx = rect.x - 10
+                cy = rect.y - 10
+                cwidth = rect.width + 10
+                cheight = rect.height + 40
+
+                if (rect.width < 100) {
+                    // Draw rectangular
+                    context.strokeStyle = '#7c7f7d';
+                    context.lineWidth = 7;
+                    context.strokeRect(cx, cy, cwidth + 10, cheight + 20);
+
+                }else if (rect.width >= 100 && rect.width < 150) {
+                    // Draw rectangular
+                    context.strokeStyle = '#ff8432';
+                    context.lineWidth = 7;
+                    context.strokeRect(cx, cy, cwidth + 10, cheight + 20);
+                    //message
+                    context.font = '50px Helvetica';
+                    context.fillStyle = "#caccce";
+                    context.fillText('請再靠近一點', rect.x - (rect.width / 2), rect.y + (rect.height / 2))
+
+                }else if (rect.width >= 180) {
+
+                    // generate small picture
+                    genSmallPic()
+
+                    // Draw rectangular
+                    context.strokeStyle = '#42f45c';
+                    context.lineWidth = 7;
+                    context.strokeRect(cx, cy, cwidth + 10, cheight + 20);
+                }
+            });
+        });
+    };
+
+    function arrangeCards() {
+        //generate time now
+        var today = new Date();
+        var sec = today.getSeconds();
+        // sec = checkTime(sec);
+
+        var rt1 = rslTime1.substring(6)
+        var rt2 = rslTime2.substring(6)
+        var rt3 = rslTime3.substring(6)
+        var rt4 = rslTime4.substring(6)
+
+        var cp1 = -1, cp2 = -1, cp3 = -1, cp4 = -1;
+
+
+        if (rt1 !== '' && cp1 === -1) {
+            sec >= rt1 ? (cp1 = sec - rt1) : (cp1 = sec + 60 - rt1);
+        }
+        if (rt2 !== '' && cp2 === -1) {
+            sec >= rt2 ? (cp2 = sec - rt2) : (cp2 = sec + 60 - rt2);
+        }
+        if (rt3 !== '' && cp3 === -1) {
+            sec >= rt3 ? (cp3 = sec - rt3) : (cp3 = sec + 60 - rt3);
+        }
+        if (rt4 !== '' && cp4 === -1) {
+            sec >= rt4 ? (cp4 = sec - rt4) : (cp4 = sec + 60 - rt4);
+        }
+        // console.log("(" + cp1 + "," + cp2 + "," + cp3 + "," + cp4 + ")")
+
+        if (cp1 >= 30) {
+            clearResult(1);
+        } else if (cp2 >= 30 && cp1 < 30) {
+            clearResult(2);
+        } else if (cp3 >= 30 && cp1 < 30 && cp2 < 30) {
+            clearResult(3);
+        } else if (cp4 >= 30 && cp1 < 30 && cp2 < 30 && cp3 < 30) {
+            clearResult(4);
+        }
+    }
+
+    function clearResult(id) {
+        var canCard1 = document.getElementById('result1');
+        var ct1 = canCard1.getContext('2d');
+        var canCard2 = document.getElementById('result2');
+        var ct2 = canCard2.getContext('2d');
+        var canCard3 = document.getElementById('result3');
+        var ct3 = canCard3.getContext('2d');
+        var canCard4 = document.getElementById('result4');
+        var ct4 = canCard4.getContext('2d');
+        var tmpResltCount;
+
+        tmpResltCount = resultCount;
+
+        switch (id) {
+            case 1:
+                // to remove 1st card & move 2~4 cards
+                if (resultCount === 2) {
+                    // only 1st card exists, remove 1st card
+                    ct1.clearRect(0, 0, canvas.width, canvas.height);
+                    result1 = '';
+                    rslTime1 = '';
+                    tmpResltCount = 1;
+                } else if (resultCount > 2) {
+                    // 2nd card exists, move 2 to 1
+                    ct1.clearRect(0, 0, canvas.width, canvas.height);
+                    ct1.drawImage(canCard2, 0, 0, canCard2.width, canCard2.height);
+                    ct2.clearRect(0, 0, canvas.width, canvas.height);
+                    result1 = result2;
+                    result2 = '';
+                    rslTime1 = rslTime2;
+                    rslTime2 = '';
+                    tmpResltCount = 2;
+
+                    if (resultCount > 3) {
+                        // 3rd card exists, move 3 to 2
+                        ct2.drawImage(canCard3, 0, 0, canCard3.width, canCard3.height);
+                        ct3.clearRect(0, 0, canvas.width, canvas.height);
+                        result2 = result3;
+                        result3 = '';
+                        rslTime2 = rslTime3;
+                        rslTime3 = '';
+                        tmpResltCount = 3;
+                    }
+                    if (resultCount > 4) {
+                        // 4th card exists, move 4 to 3
+                        ct3.drawImage(canCard4, 0, 0, canCard4.width, canCard4.height);
+                        ct4.clearRect(0, 0, canvas.width, canvas.height);
+                        result3 = result4;
+                        result4 = '';
+                        rslTime3 = rslTime4;
+                        rslTime4 = '';
+                        tmpResltCount = 4;
+                    }
+                }
+                resultCount = tmpResltCount;
+                // console.log(resultCount)
+                break;
+            case 2:
+                // to remove 2nd card & move 3~4 cards
+                if (resultCount === 3) {
+                    // 2 cards exist, remove 2nd card
+                    ct2.clearRect(0, 0, canvas.width, canvas.height);
+                    result2 = '';
+                    rslTime2 = '';
+                    tmpResltCount = 2
+                } else if (resultCount > 3) {
+                    // 3rd card exists, move 3 to 2
+                    ct2.clearRect(0, 0, canvas.width, canvas.height);
+                    ct2.drawImage(canCard3, 0, 0, canCard3.width, canCard3.height);
+                    ct3.clearRect(0, 0, canvas.width, canvas.height);
+                    result2 = result3;
+                    result3 = '';
+                    rslTime2 = rslTime3;
+                    rslTime3 = '';
+                    tmpResltCount = 3;
+
+                    if (resultCount > 4) {
+                        // 4th card exists, move 4 to 3, remove 4
+                        ct3.drawImage(canCard4, 0, 0, canCard4.width, canCard4.height);
+                        ct4.clearRect(0, 0, canvas.width, canvas.height);
+                        result3 = result4;
+                        result4 = '';
+                        rslTime3 = rslTime4;
+                        rslTime4 = '';
+                        tmpResltCount = 4;
+                    }
+                }
+                resultCount = tmpResltCount;
+                break;
+            case 3:
+                // to remove 3nd card & move 4th card
+                if (resultCount === 4) {
+                    // 3 cards exist, remove 3rd card
+                    ct3.clearRect(0, 0, canvas.width, canvas.height);
+                    result3 = '';
+                    rslTime3 = '';
+                    tmpResltCount = 3
+                } else if (resultCount > 4) {
+                    // 4th card exists, move 4 to 3
+                    ct3.clearRect(0, 0, canvas.width, canvas.height);
+                    ct3.drawImage(canCard4, 0, 0, canCard4.width, canCard4.height);
+                    ct4.clearRect(0, 0, canvas.width, canvas.height);
+                    result3 = result4;
+                    result4 = '';
+                    rslTime3 = rslTime4;
+                    rslTime4 = '';
+                    tmpResltCount = 4;
+                }
+                resultCount = tmpResltCount;
+                break;
+            case 4:
+                // to remove 4th card
+                ct4.clearRect(0, 0, canvas.width, canvas.height);
+                result4 = '';
+                rslTime4 = '';
+                tmpResltCount = 4;
+                resultCount = tmpResltCount;
+                break;
+        }
+    }
+
+    function genSmallPic() {
+        // generate small picture
+        var canSamll = document.getElementById('canvasSmall')
+        var ct = canSamll.getContext('2d')
+        var can = document.getElementById('canvas')
+        var ctx = can.getContext('2d')
+
+        ct.drawImage(can, cx - (cwidth * 0.4), cy - (cheight * 0.4), (cwidth * (1 + 0.8)), (cwidth * (1 + 0.8)), 0, 0, 320, 320)
+
+        // generate base64 and send it to match
+        var canBase = document.getElementById('canvasSmall')
+        var captured = canBase.toDataURL().substring(22)
+
+
+        matching(captured);
+
+
+    }
+
+    function genCard(resultCount, data, createTime) {
+        // generate result cards
+        var canCard1 = document.getElementById('result1');
+        var ct1 = canCard1.getContext('2d');
+        var canCard2 = document.getElementById('result2');
+        var ct2 = canCard2.getContext('2d');
+        var canCard3 = document.getElementById('result3');
+        var ct3 = canCard3.getContext('2d');
+        var canCard4 = document.getElementById('result4');
+        var ct4 = canCard4.getContext('2d');
+
+        switch (resultCount) {
+            case 1:
+                ct1.clearRect(0, 0, canvas.width, canvas.height);
+                ct1.drawImage(imageMem, 45, 35, 220, 220);
+                ct1.drawImage(image, 0, 0, 300, 400);
+                ct1.font = "18pt Monospaced";
+                ct1.fillStyle = "White";
+                ct1.fillText(data.MemberID, 155, 280);
+                ct1.fillText(data.MemberName, 155, 315);
+                ct1.fillText(createTime, 155, 350);
+                break;
+            case 2:
+                ct2.clearRect(0, 0, canvas.width, canvas.height);
+                ct2.drawImage(imageMem, 45, 35, 220, 220);
+                ct2.drawImage(image, 0, 0, 300, 400);
+                ct2.font = "18pt Monospaced";
+                ct2.fillStyle = "White";
+                ct2.fillText(data.MemberID, 155, 280);
+                ct2.fillText(data.MemberName, 155, 315);
+                ct2.fillText(createTime, 155, 350);
+                break;
+            case 3:
+                ct3.clearRect(0, 0, canvas.width, canvas.height);
+                ct3.drawImage(imageMem, 45, 35, 220, 220);
+                ct3.drawImage(image, 0, 0, 300, 400);
+                ct3.font = "18pt Monospaced";
+                ct3.fillStyle = "White";
+                ct3.fillText(data.MemberID, 155, 280);
+                ct3.fillText(data.MemberName, 155, 315);
+                ct3.fillText(createTime, 155, 350);
+                break;
+            case 4:
+                ct4.clearRect(0, 0, canvas.width, canvas.height);
+                ct4.drawImage(imageMem, 45, 35, 220, 220);
+                ct4.drawImage(image, 0, 0, 300, 400);
+                ct4.font = "18pt Monospaced";
+                ct4.fillStyle = "White";
+                ct4.fillText(data.MemberID, 155, 280);
+                ct4.fillText(data.MemberName, 155, 315);
+                ct4.fillText(createTime, 155, 350);
+                break;
+        }
+    }
+
+    function setImage(data, createTime, resultCount) {
+        //init image
+        var ri = "data:image/jpg;base64," + data.Image;
+
+        var matchResult = document.getElementById('matchResult');
+        var ctr = matchResult.getContext('2d');
+
+        image.src = 'img/sources/memCard.png';
+        imageMem.src = ri;
+
+        image.onload = function () {
+            //makePopImage
+            matchResult.width = image.width;
+            matchResult.height = image.height;
+        }
+        setTimeout(function () {
+            drawSuccess(ri, data, createTime, resultCount);
+        }, 500)
+    }
+
+    function drawSuccess(ri, data, createTime, resultCount) {
+        var matchResult = document.getElementById('matchResult');
+        var ctr = matchResult.getContext('2d');
+        imageMem.src = ri;
+
+        ctr.clearRect(0, 0, canvas.width, canvas.height);
+        ctr.drawImage(imageMem, 45, 55, 320, 320)
+
+        setTimeout(function () {
+            drawFrame(data, createTime, resultCount);
+        }, 100)
+    }
+
+    function drawFrame(data, createTime, resultCount) {
+        var matchResult = document.getElementById('matchResult');
+        var ctr = matchResult.getContext('2d');
+        ctr.drawImage(image, 0, 0, image.width, image.height);
+        ctr.font = "22pt Monospaced";
+        ctr.fillStyle = "White";
+        ctr.fillText(data.MemberID, 210, 398);
+        ctr.fillText(data.MemberName, 210, 447);
+        ctr.fillText(createTime, 210, 495);
+
+        popOut('myPopout');
+        console.log(resultCount)
+        genCard(resultCount, data, createTime);
+    }
+
+    function detectFail(createTime) {
+        //generate time now
+        var today = new Date();
+        var sec = today.getSeconds();
+        sec = checkTime(sec);
+        var cp;
+
+
+        if (errDetect) {
+
+            popOut('myPopout2')
+
+            errDetect = false
+            errWaitTime = sec
+        } else {
+            errWaitTime < createTime ? (cp = createTime - errWaitTime) : (cp = createTime + 60 - errWaitTime)
+            cp > ERRCOOLTIME ? (errDetect = true) : (errDetect = false)
+        }
+        console.log(errDetect)
+    }
+
+    function matching(image) {
+        $.ajax({
+            contentType: 'application/json; charset=UTF-8',
+            dataType: "json",
+            type: "post",
+            data: JSON.stringify({
+                'Type': 1,
+                'Image': image,
+                'ImageReturn': true
+            }),
+            async: true,
+            url: "http://10.254.253.128:8080/api/FRS",
+            success: function (data) {
+                console.log(data)
+
+                //generate createTime (Tentatively use)
+                var today = new Date();
+                var hr = today.getHours();
+                var min = today.getMinutes();
+                var sec = today.getSeconds();
+                hr = checkTime(hr);
+                min = checkTime(min);
+                sec = checkTime(sec);
+                var createTime = hr + ":" + min + ":" + sec
+
+                if (data.Result === 0 && data.Score > 0.6) {
+                    if (data.MemberID === result1) {
+                        down('#resultBounce1')
+                        rslTime1 = createTime;
+                    } else if (data.MemberID === result2) {
+                        down('#resultBounce2')
+                        rslTime2 = createTime;
+                    } else if (data.MemberID === result3) {
+                        down('#resultBounce3')
+                        rslTime3 = createTime;
+                    } else if (data.MemberID === result4) {
+                        down('#resultBounce4')
+                        rslTime4 = createTime;
+                    } else {
+                        switch (resultCount) {
+                            case 1:
+                                result1 = data.MemberID;
+                                rslTime1 = createTime;
+                                break;
+                            case 2:
+                                result2 = data.MemberID;
+                                rslTime2 = createTime;
+                                break;
+                            case 3:
+                                result3 = data.MemberID;
+                                rslTime3 = createTime;
+                                break;
+                            case 4:
+                                result4 = data.MemberID;
+                                rslTime4 = createTime;
+                                break;
+                            case 5:
+                                clearResult(1);
+                                result4 = data.MemberID;
+                                rslTime4 = createTime;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        if (resultCount < 6) {
+                            setImage(data, createTime, resultCount);
+                            resultCount++;
+                        }
+                        console.log("Res=" + resultCount)
+                    }
+                } else if (data.Result === 33) {
+                    detectFail(sec);
+                } else {
+                    switch (data.Result) {
+                        case 1:
+                            console.log("Unkown Error");
+                            break;
+                        case 2:
+                            console.log("API Not Initialized");
+                            break;
+                        case 3:
+                            console.log("License Limit Reached");
+                            break;
+                        case 4:
+                            console.log("FC Not Configure");
+                            break;
+                        case 5:
+                            console.log("MS Not Configure");
+                            break;
+                        case 6:
+                            console.log("NS Not Configure");
+                            break;
+                        case 7:
+                            console.log("FC Not Connected");
+                            break;
+                        case 8:
+                            console.log("MS Not Connected");
+                            break;
+                        case 9:
+                            console.log("NS Not Connected");
+                            break;
+                        case 10:
+                            console.log("Image Error");
+                            break;
+                        case 13:
+                            console.log("User Not Found");
+                            break;
+                        case 14:
+                            console.log("Parameter Not Found");
+                            break;
+                        case 15:
+                            console.log("Time Out");
+                            break;
+                        case 16:
+                            console.log("MS Memory Full");
+                            break;
+                        case 17:
+                            console.log("Database Error");
+                            break;
+                        case 19:
+                            console.log("Internal Error");
+                            break;
+                        case 20:
+                            console.log("Network Error");
+                            break;
+                        case 22:
+                            console.log("License Not Found");
+                            break;
+                        case 23:
+                            console.log("License Error");
+                            break;
+                        case 32:
+                            console.log("Not Initialized");
+                            break;
+                        case 34:
+                            console.log("Require Data Is Missing");
+                            break;
+                    }
+                }
+            },
+            error: function (jqXHR, exception) {
+                console.log("Matching error")
+                // ajaxError(jqXHR, exception);
+            },
+        });
+    }
+
+
+</script>
+</body>
+</html>

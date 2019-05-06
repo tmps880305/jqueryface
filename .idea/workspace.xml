@@ -2,6 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8982c480-a76f-45ca-b30d-dfcfa8d3d921" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/book1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/book2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/box1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/box2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/brief1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/brief2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/color_camera_gui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/demo.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/draw_frame.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/emilia.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/faces.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fast.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/FishTankRenderer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/nx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/ny.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/nz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/py.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fish_tank/pz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/franck.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/franck.ogv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/franck.webm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/minions.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/minions.ogv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/psmove.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/splines.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/stats.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/data/eye-min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/data/eye.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/data/face-min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/data/face.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/data/mouth-min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/data/mouth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tracking-min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tracking.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/camera_track.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/face_camera.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/camera.html" beforeDir="false" afterPath="$PROJECT_DIR$/camera.html" afterDir="false" />
     </list>
@@ -13,28 +51,85 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/camera.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="209" column="66" selection-start-line="209" selection-start-column="66" selection-end-line="209" selection-end-column="66" />
+            <state relative-caret-position="170">
+              <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
               <folding>
+                <element signature="n#style#0;n#video#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#6;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#6;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#4340#5766#0" />
+                <element signature="e#169514#170733#0" />
                 <element signature="e#170764#175935#0" />
                 <element signature="e#173257#174689#0" />
                 <element signature="e#174702#175631#0" />
                 <element signature="e#175644#175919#0" />
-                <element signature="e#175964#176530#0" />
                 <element signature="e#176584#178974#0" />
                 <element signature="e#179029#179579#0" />
                 <element signature="e#179641#180002#0" />
                 <element signature="e#180058#180563#0" />
                 <element signature="e#180601#181113#0" />
+                <element signature="e#181144#186777#0" />
                 <element signature="e#183837#186568#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/camera_track.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="131" column="27" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="27" />
+              <folding>
+                <element signature="n#style#0;n#video#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#canvas#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#5804#7026#0" />
+                <element signature="e#7057#12231#0" />
+                <element signature="e#12260#12826#0" />
+                <element signature="e#12880#15270#0" />
+                <element signature="e#15325#15875#0" />
+                <element signature="e#15937#16298#0" />
+                <element signature="e#16354#16859#0" />
+                <element signature="e#16897#17409#0" />
+                <element signature="e#17440#23447#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/tracking.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="2461" column="2" selection-start-line="2461" selection-start-column="2" selection-end-line="2461" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/face_camera.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="241">
+              <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+              <folding>
+                <element signature="n#style#0;n#video#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/jquery.facedetection.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="519">
+              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,19 +145,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/resultBox.css">
+        <entry file="file://$PROJECT_DIR$/css/htmlWrapper.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+            <state relative-caret-position="293">
+              <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/htmlWrapper.css">
+        <entry file="file://$PROJECT_DIR$/css/resultBox.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
-              <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+            <state relative-caret-position="154">
+              <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -91,14 +186,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/css/htmlWrapper.css" />
         <option value="$PROJECT_DIR$/js/clock.js" />
         <option value="$PROJECT_DIR$/css/clock.css" />
         <option value="$PROJECT_DIR$/js/bouncing.js" />
         <option value="$PROJECT_DIR$/css/popout.css" />
         <option value="$PROJECT_DIR$/css/resultBox.css" />
         <option value="$PROJECT_DIR$/js/popout.js" />
+        <option value="$PROJECT_DIR$/face_camera.html" />
+        <option value="$PROJECT_DIR$/css/htmlWrapper.css" />
         <option value="$PROJECT_DIR$/camera.html" />
+        <option value="$PROJECT_DIR$/camera_track.html" />
       </list>
     </option>
   </component>
@@ -125,7 +222,7 @@
             <path>
               <item name="jQueryFaceDetectionWeb" type="b2602c69:ProjectViewProjectNode" />
               <item name="jQueryFaceDetectionWeb" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -144,6 +241,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$/js" />
     </key>
@@ -177,7 +275,7 @@
       <workItem from="1556589961063" duration="18247000" />
       <workItem from="1556763242491" duration="24339000" />
       <workItem from="1556857333963" duration="22272000" />
-      <workItem from="1557111385697" duration="4659000" />
+      <workItem from="1557111385697" duration="9437000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <created>1556191547909</created>
@@ -333,17 +431,24 @@
       <option name="project" value="LOCAL" />
       <updated>1557127923875</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary=".">
+      <created>1557128050647</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1557128050647</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102962000" />
+    <option name="totallyTimeSpent" value="107740000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1023" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1904762" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.1904762" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -451,13 +556,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="2680" column="4" selection-start-line="2680" selection-start-column="4" selection-end-line="2680" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/clock.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="682">
@@ -469,16 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/jquery.facedetection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-733">
-          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -496,20 +584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/htmlWrapper.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/resultBox.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/popout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -517,27 +591,100 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery.facedetection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="628">
+          <caret line="4845" column="10" selection-start-line="4845" selection-start-column="10" selection-end-line="4845" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/data/eye.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/resultBox.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/face_camera.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#video#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/tracking.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="2461" column="2" selection-start-line="2461" selection-start-column="2" selection-end-line="2461" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/htmlWrapper.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/camera.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="209" column="66" selection-start-line="209" selection-start-column="66" selection-end-line="209" selection-end-column="66" />
+        <state relative-caret-position="170">
+          <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
           <folding>
+            <element signature="n#style#0;n#video#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#6;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#6;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#4340#5766#0" />
+            <element signature="e#169514#170733#0" />
             <element signature="e#170764#175935#0" />
             <element signature="e#173257#174689#0" />
             <element signature="e#174702#175631#0" />
             <element signature="e#175644#175919#0" />
-            <element signature="e#175964#176530#0" />
             <element signature="e#176584#178974#0" />
             <element signature="e#179029#179579#0" />
             <element signature="e#179641#180002#0" />
             <element signature="e#180058#180563#0" />
             <element signature="e#180601#181113#0" />
+            <element signature="e#181144#186777#0" />
             <element signature="e#183837#186568#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camera_track.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="131" column="27" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="27" />
+          <folding>
+            <element signature="n#style#0;n#video#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#canvas#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#5804#7026#0" />
+            <element signature="e#7057#12231#0" />
+            <element signature="e#12260#12826#0" />
+            <element signature="e#12880#15270#0" />
+            <element signature="e#15325#15875#0" />
+            <element signature="e#15937#16298#0" />
+            <element signature="e#16354#16859#0" />
+            <element signature="e#16897#17409#0" />
+            <element signature="e#17440#23447#0" />
           </folding>
         </state>
       </provider>
