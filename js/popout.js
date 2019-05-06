@@ -7,7 +7,7 @@ function popOut(myPopout) {
 
     setTimeout(function () {
         popOff(myPopout);
-    }, 1500)
+    }, 1000)
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
