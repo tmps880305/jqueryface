@@ -59,18 +59,18 @@
     <!--Result boxes-->
     <div class="result1">
         <div id="resultBounce1" onclick="down('#resultBounce1')" style="position: relative">
-            <canvas id="result1" width="300" height="400"></canvas>
+            <canvas id="result1" width="300" height="400" style="display: none"></canvas>
         </div>
         <div id="resultBounce3" style="position: relative">
-            <canvas id="result3" width="300" height="400"></canvas>
+            <canvas id="result3" width="300" height="400" style="display: none"></canvas>
         </div>
     </div>
     <div class="result2">
         <div id="resultBounce2" style="position: relative">
-            <canvas id="result2" width="300" height="400"></canvas>
+            <canvas id="result2" width="300" height="400" style="display: none"></canvas>
         </div>
         <div id="resultBounce4" style="position: relative">
-            <canvas id="result4" width="300" height="400"></canvas>
+            <canvas id="result4" width="300" height="400" style="display: none"></canvas>
         </div>
     </div>
 
@@ -409,6 +409,7 @@
                 ct1.fillText(data.MemberID, 155, 280);
                 ct1.fillText(data.MemberName, 155, 315);
                 ct1.fillText(createTime, 155, 350);
+                $("#result1").fadeIn(3000);
                 break;
             case 2:
                 ct2.clearRect(0, 0, canvas.width, canvas.height);
@@ -419,6 +420,7 @@
                 ct2.fillText(data.MemberID, 155, 280);
                 ct2.fillText(data.MemberName, 155, 315);
                 ct2.fillText(createTime, 155, 350);
+                $("#result2").fadeIn(3000);
                 break;
             case 3:
                 ct3.clearRect(0, 0, canvas.width, canvas.height);
@@ -429,6 +431,7 @@
                 ct3.fillText(data.MemberID, 155, 280);
                 ct3.fillText(data.MemberName, 155, 315);
                 ct3.fillText(createTime, 155, 350);
+                $("#result3").fadeIn(3000);
                 break;
             case 4:
                 ct4.clearRect(0, 0, canvas.width, canvas.height);
@@ -439,6 +442,7 @@
                 ct4.fillText(data.MemberID, 155, 280);
                 ct4.fillText(data.MemberName, 155, 315);
                 ct4.fillText(createTime, 155, 350);
+                $("#result4").fadeIn(3000);
                 break;
         }
     }
