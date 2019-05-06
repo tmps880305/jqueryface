@@ -107,7 +107,7 @@
     var resultCount = 1;
     var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
     var errDetect = true, errWaitTime = -1;
-    var ERRCOOLTIME = 20;
+    var ERRCOOLTIME = 200;
 
 
     $(function () {
@@ -303,7 +303,7 @@
                     }
                 }
                 resultCount = tmpResltCount;
-                console.log(resultCount)
+                // console.log(resultCount)
                 break;
             case 2:
                 // to remove 2nd card & move 3~4 cards
@@ -537,7 +537,7 @@
                 sec = checkTime(sec);
                 var createTime = hr + ":" + min + ":" + sec
 
-                if (data.Result === 0 && data.Score > 0.7) {
+                if (data.Result === 0 && data.Score > 0.6) {
                     if (data.MemberID === result1) {
                         down('#resultBounce1')
                         rslTime1 = createTime;
@@ -568,12 +568,20 @@
                                 result4 = data.MemberID;
                                 rslTime4 = createTime;
                                 break;
+                            case 5:
+                                clearResult(1);
+                                result4 = data.MemberID;
+                                rslTime4 = createTime;
+                                break;
                             default:
                                 break;
                         }
 
-                        setImage(data, createTime, resultCount);
-                        resultCount++;
+                        if (resultCount < 6) {
+                            setImage(data, createTime, resultCount);
+                            resultCount++;
+                        }
+                        console.log("Res=" + resultCount)
                     }
                 } else if (data.Result === 33) {
                     detectFail(sec);
