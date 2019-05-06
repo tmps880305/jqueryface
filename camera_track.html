@@ -33,7 +33,7 @@
 </style>
 
 
-<body onload="clock();">
+<body>
 <div class="wrapper">
     <div class="topBar">
         <img id="logo" src="./img/sources/top.png" alt="**logo**" width="1892">
@@ -113,6 +113,8 @@
 
 
     window.onload = function () {
+        clock();
+
         var video = document.getElementById('video');
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
