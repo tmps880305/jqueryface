@@ -500,16 +500,12 @@
                     if (data.IsSaveResult === false) {
                         if (data.MemberID === result1) {
                             down('#resultBounce1')
-                            // rslTime1 = createTime;
                         } else if (data.MemberID === result2) {
                             down('#resultBounce2')
-                            // rslTime2 = createTime;
                         } else if (data.MemberID === result3) {
                             down('#resultBounce3')
-                            // rslTime3 = createTime;
                         } else if (data.MemberID === result4) {
                             down('#resultBounce4')
-                            // rslTime4 = createTime;
                         }
                     } else if (data.IsSaveResult === true) {
                         var createTime = data.CreateTime.substring(11)
@@ -527,7 +523,6 @@
                             down('#resultBounce4')
                             rslTime4 = createTime;
                         } else {
-
                             switch (resultCount) {
                                 case 1:
                                     result1 = data.MemberID;
