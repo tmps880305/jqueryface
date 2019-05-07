@@ -111,7 +111,7 @@
     var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
     var errDetect = true, errWaitTime = -1;
     var ERRCOOLTIME = 50;
-    var DUPLICATION = 10;
+    var DUPLICATION = 20;
     var THRESHOLD = 0.65;
 
 
@@ -176,7 +176,7 @@
     function arrangeCards() {
         //generate time now
         var today = new Date();
-        var sec = today.getSeconds() + 1; // Local time is 1 sec later than Server time
+        var sec = today.getSeconds() + 3; // Local time is 1 sec later than Server time
         // sec = checkTime(sec);
 
         var rt1 = rslTime1.substring(6)
@@ -513,106 +513,124 @@
                         }
                     } else if (data.IsSaveResult === true) {
                         var createTime = data.CreateTime.substring(11)
-                        switch (resultCount) {
-                            case 1:
-                                result1 = data.MemberID;
-                                rslTime1 = createTime;
-                                break;
-                            case 2:
-                                result2 = data.MemberID;
-                                rslTime2 = createTime;
-                                break;
-                            case 3:
-                                result3 = data.MemberID;
-                                rslTime3 = createTime;
-                                break;
-                            case 4:
-                                result4 = data.MemberID;
-                                rslTime4 = createTime;
-                                break;
-                            case 5:
-                                clearResult(1);
-                                result4 = data.MemberID;
-                                rslTime4 = createTime;
-                                break;
-                            default:
-                                break;
-                        }
 
-                        if (resultCount < 6) {
-                            setImage(data, createTime, resultCount);
-                            resultCount++;
+                        if (data.MemberID === result1) {
+                            console.log("IFFF")
+                            down('#resultBounce1')
+                            rslTime1 = createTime;
+                        } else if (data.MemberID === result2) {
+                            down('#resultBounce2')
+                            rslTime2 = createTime;
+                        } else if (data.MemberID === result3) {
+                            down('#resultBounce3')
+                            rslTime3 = createTime;
+                        } else if (data.MemberID === result4) {
+                            down('#resultBounce4')
+                            rslTime4 = createTime;
+                        } else {
+
+                            switch (resultCount) {
+                                case 1:
+                                    result1 = data.MemberID;
+                                    rslTime1 = createTime;
+                                    break;
+                                case 2:
+                                    result2 = data.MemberID;
+                                    rslTime2 = createTime;
+                                    break;
+                                case 3:
+                                    result3 = data.MemberID;
+                                    rslTime3 = createTime;
+                                    break;
+                                case 4:
+                                    result4 = data.MemberID;
+                                    rslTime4 = createTime;
+                                    break;
+                                case 5:
+                                    clearResult(1);
+                                    result4 = data.MemberID;
+                                    rslTime4 = createTime;
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+                            if (resultCount < 6) {
+                                setImage(data, createTime, resultCount);
+                                resultCount++;
+                            }
+                            // console.log("Res=" + resultCount)
                         }
-                        // console.log("Res=" + resultCount)
                     }
                 } else if (data.Result === 0 && data.Score < THRESHOLD) {
                     detectFail(sec);
                 } else {
-                    switch (data.Result) {
-                        case 1:
-                            console.log("Unkown Error");
-                            break;
-                        case 2:
-                            console.log("API Not Initialized");
-                            break;
-                        case 3:
-                            console.log("License Limit Reached");
-                            break;
-                        case 4:
-                            console.log("FC Not Configure");
-                            break;
-                        case 5:
-                            console.log("MS Not Configure");
-                            break;
-                        case 6:
-                            console.log("NS Not Configure");
-                            break;
-                        case 7:
-                            console.log("FC Not Connected");
-                            break;
-                        case 8:
-                            console.log("MS Not Connected");
-                            break;
-                        case 9:
-                            console.log("NS Not Connected");
-                            break;
-                        case 10:
-                            console.log("Image Error");
-                            break;
-                        case 13:
-                            console.log("User Not Found");
-                            break;
-                        case 14:
-                            console.log("Parameter Not Found");
-                            break;
-                        case 15:
-                            console.log("Time Out");
-                            break;
-                        case 16:
-                            console.log("MS Memory Full");
-                            break;
-                        case 17:
-                            console.log("Database Error");
-                            break;
-                        case 19:
-                            console.log("Internal Error");
-                            break;
-                        case 20:
-                            console.log("Network Error");
-                            break;
-                        case 22:
-                            console.log("License Not Found");
-                            break;
-                        case 23:
-                            console.log("License Error");
-                            break;
-                        case 32:
-                            console.log("Not Initialized");
-                            break;
-                        case 34:
-                            console.log("Require Data Is Missing");
-                            break;
-                    }
+                    // switch (data.Result) {
+                    //     case 1:
+                    //         console.log("Unkown Error");
+                    //         break;
+                    //     case 2:
+                    //         console.log("API Not Initialized");
+                    //         break;
+                    //     case 3:
+                    //         console.log("License Limit Reached");
+                    //         break;
+                    //     case 4:
+                    //         console.log("FC Not Configure");
+                    //         break;
+                    //     case 5:
+                    //         console.log("MS Not Configure");
+                    //         break;
+                    //     case 6:
+                    //         console.log("NS Not Configure");
+                    //         break;
+                    //     case 7:
+                    //         console.log("FC Not Connected");
+                    //         break;
+                    //     case 8:
+                    //         console.log("MS Not Connected");
+                    //         break;
+                    //     case 9:
+                    //         console.log("NS Not Connected");
+                    //         break;
+                    //     case 10:
+                    //         console.log("Image Error");
+                    //         break;
+                    //     case 13:
+                    //         console.log("User Not Found");
+                    //         break;
+                    //     case 14:
+                    //         console.log("Parameter Not Found");
+                    //         break;
+                    //     case 15:
+                    //         console.log("Time Out");
+                    //         break;
+                    //     case 16:
+                    //         console.log("MS Memory Full");
+                    //         break;
+                    //     case 17:
+                    //         console.log("Database Error");
+                    //         break;
+                    //     case 19:
+                    //         console.log("Internal Error");
+                    //         break;
+                    //     case 20:
+                    //         console.log("Network Error");
+                    //         break;
+                    //     case 22:
+                    //         console.log("License Not Found");
+                    //         break;
+                    //     case 23:
+                    //         console.log("License Error");
+                    //         break;
+                    //     case 32:
+                    //         console.log("Not Initialized");
+                    //         break;
+                    //     case 34:
+                    //         console.log("Require Data Is Missing");
+                    //         break;
+                    // }
                 }
             },
             error: function (jqXHR, exception) {
