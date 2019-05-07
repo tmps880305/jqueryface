@@ -106,15 +106,16 @@
     var cx, cy, cwidth, cheight;
     var image = new Image();
     var imageMem = new Image();
-    var result1 = '', result2 = '', result3 = '', result4 = '';
-    var resultCount = 1;
-    var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = '';
+    var result1 = '', result2 = '', result3 = '', result4 = ''; // to store the MemberID of whom already on the board
+    var resultCount = 1; // to point to the last card which is on the board
+    var rslTime1 = '', rslTime2 = '', rslTime3 = '', rslTime4 = ''; // to store the createTime of whom already on the board
     var errDetect = true, errWaitTime = -1;
-    var ERRCOOLTIME = 50;
-    var DUPLICATION = 20;
-    var THRESHOLD = 0.65;
+    var ERRCOOLTIME = 50; // Cooling time for error member, whose score lower than THRESHOLD
+    var DUPLICATION = 20; // Duplicate member between this time and it createTime will bounce w/o popout screen
+    var THRESHOLD = 0.65; // Score to recognize members that pass matching
 
 
+    // main function of this program, to capture face from the video, send to match, and give results
     window.onload = function () {
         clock();
 
@@ -173,6 +174,7 @@
         });
     };
 
+    // function to check if any card need to be cancelled
     function arrangeCards() {
         //generate time now
         var today = new Date();
@@ -213,6 +215,7 @@
         }
     }
 
+    // to clear the card and move others forward
     function clearResult(id) {
         var canCard1 = document.getElementById('result1');
         var ct1 = canCard1.getContext('2d');
@@ -334,6 +337,7 @@
         }
     }
 
+    //to generate small picture which only contain faces
     function genSmallPic() {
         // generate small picture
         var canSamll = document.getElementById('canvasSmall')
@@ -353,6 +357,7 @@
 
     }
 
+    // to generate small cards on the board
     function genCard(resultCount, data, createTime) {
         // generate result cards
         var canCard1 = document.getElementById('result1');
@@ -408,6 +413,7 @@
         }
     }
 
+    // to initialize the image of 'success' card, and call function to draw face who is success
     function setImage(data, createTime, resultCount) {
         //init image
         var ri = "data:image/jpg;base64," + data.Image;
@@ -428,6 +434,7 @@
         }, 500)
     }
 
+    // to draw face who is success, and call function to draw the 'Success' frame
     function drawSuccess(ri, data, createTime, resultCount) {
         var matchResult = document.getElementById('matchResult');
         var ctr = matchResult.getContext('2d');
@@ -441,6 +448,7 @@
         }, 100)
     }
 
+    // to draw 'Success' frame with member information included, and call popout screen function
     function drawFrame(data, createTime, resultCount) {
         var matchResult = document.getElementById('matchResult');
         var ctr = matchResult.getContext('2d');
@@ -456,6 +464,7 @@
         genCard(resultCount, data, createTime);
     }
 
+    // to call popout function of failure
     function detectFail(createTime) {
         //generate time now
         var today = new Date();
@@ -477,6 +486,7 @@
         console.log(errDetect)
     }
 
+    // the Matching function, sending face to the api and giving next step depends on the results
     function matching(image) {
         $.ajax({
             contentType: 'application/json; charset=UTF-8',
