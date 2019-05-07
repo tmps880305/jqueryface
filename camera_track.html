@@ -176,7 +176,7 @@
     function arrangeCards() {
         //generate time now
         var today = new Date();
-        var sec = today.getSeconds() + 1;
+        var sec = today.getSeconds() + 1; // Local time is 1 sec later than Server time
         // sec = checkTime(sec);
 
         var rt1 = rslTime1.substring(6)
@@ -200,8 +200,7 @@
             sec >= rt4 ? (cp4 = sec - rt4) : (cp4 = sec + 60 - rt4);
         }
         // console.log("(" + cp1 + "," + cp2 + "," + cp3 + "," + cp4 + ")")
-        console.log("(" + rt1 + "," + rt2 + "," + rt3 + "," + rt4 + ")")
-        console.log(sec)
+        // console.log("(" + rt1 + "," + rt2 + "," + rt3 + "," + rt4 + ")")
 
         if (cp1 >= DUPLICATION) {
             clearResult(1);
