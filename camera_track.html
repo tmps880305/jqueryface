@@ -55,7 +55,8 @@
 
     <!--camera screen-->
     <div class="video">
-        <video ref="video"  id="video" width="960" height="720" preload autoplay loop muted style="position: absolute;"></video>
+        <video ref="video" id="video" width="960" height="720" preload autoplay loop muted
+               style="position: absolute;"></video>
         <canvas id="canvas" width="960" height="720" style="position: absolute"></canvas>
     </div>
 
@@ -111,6 +112,7 @@
     var errDetect = true, errWaitTime = -1;
     var ERRCOOLTIME = 50;
     var DUPLICATION = 10;
+    var THRESHOLD = 0.65;
 
 
     window.onload = function () {
@@ -147,7 +149,7 @@
                     context.lineWidth = 7;
                     context.strokeRect(cx, cy, cwidth + 10, cheight + 20);
 
-                }else if (rect.width >= 80 && rect.width < 100) {
+                } else if (rect.width >= 80 && rect.width < 100) {
                     // Draw rectangular
                     context.strokeStyle = '#ff8432';
                     context.lineWidth = 7;
@@ -157,7 +159,7 @@
                     context.fillStyle = "#caccce";
                     context.fillText('請再靠近一點', rect.x - (rect.width / 2), rect.y + (rect.height / 2))
 
-                }else if (rect.width >= 100) {
+                } else if (rect.width >= 100) {
 
                     // generate small picture
                     genSmallPic()
@@ -174,7 +176,7 @@
     function arrangeCards() {
         //generate time now
         var today = new Date();
-        var sec = today.getSeconds();
+        var sec = today.getSeconds() + 1;
         // sec = checkTime(sec);
 
         var rt1 = rslTime1.substring(6)
@@ -198,6 +200,8 @@
             sec >= rt4 ? (cp4 = sec - rt4) : (cp4 = sec + 60 - rt4);
         }
         // console.log("(" + cp1 + "," + cp2 + "," + cp3 + "," + cp4 + ")")
+        console.log("(" + rt1 + "," + rt2 + "," + rt3 + "," + rt4 + ")")
+        console.log(sec)
 
         if (cp1 >= DUPLICATION) {
             clearResult(1);
@@ -449,7 +453,7 @@
         ctr.fillText(createTime, 210, 495);
 
         popOut('myPopout');
-        console.log(resultCount)
+        // console.log(resultCount)
         genCard(resultCount, data, createTime);
     }
 
@@ -491,28 +495,26 @@
 
                 //generate createTime (Tentatively use)
                 var today = new Date();
-                var hr = today.getHours();
-                var min = today.getMinutes();
                 var sec = today.getSeconds();
-                hr = checkTime(hr);
-                min = checkTime(min);
-                sec = checkTime(sec);
-                var createTime = hr + ":" + min + ":" + sec
+                // var createTime = hr + ":" + min + ":" + sec
 
-                if (data.Result === 0 && data.Score > 0.6) {
-                    if (data.MemberID === result1) {
-                        down('#resultBounce1')
-                        rslTime1 = createTime;
-                    } else if (data.MemberID === result2) {
-                        down('#resultBounce2')
-                        rslTime2 = createTime;
-                    } else if (data.MemberID === result3) {
-                        down('#resultBounce3')
-                        rslTime3 = createTime;
-                    } else if (data.MemberID === result4) {
-                        down('#resultBounce4')
-                        rslTime4 = createTime;
-                    } else {
+                if (data.Result === 0 && data.Score > THRESHOLD) {
+                    if (data.IsSaveResult === false) {
+                        if (data.MemberID === result1) {
+                            down('#resultBounce1')
+                            // rslTime1 = createTime;
+                        } else if (data.MemberID === result2) {
+                            down('#resultBounce2')
+                            // rslTime2 = createTime;
+                        } else if (data.MemberID === result3) {
+                            down('#resultBounce3')
+                            // rslTime3 = createTime;
+                        } else if (data.MemberID === result4) {
+                            down('#resultBounce4')
+                            // rslTime4 = createTime;
+                        }
+                    } else if (data.IsSaveResult === true) {
+                        var createTime = data.CreateTime.substring(11)
                         switch (resultCount) {
                             case 1:
                                 result1 = data.MemberID;
@@ -543,9 +545,9 @@
                             setImage(data, createTime, resultCount);
                             resultCount++;
                         }
-                        console.log("Res=" + resultCount)
+                        // console.log("Res=" + resultCount)
                     }
-                } else if (data.Result === 33) {
+                } else if (data.Result === 0 && data.Score < THRESHOLD) {
                     detectFail(sec);
                 } else {
                     switch (data.Result) {
